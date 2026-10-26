@@ -1,0 +1,19 @@
+# Shared model base, merged into every training config via `_base_`.
+#
+# The Mask2Former architecture (200 queries, 256-d hidden, 8 heads,
+# 10 decoder layers) is inherited from the pretrained Hugging Face checkpoint
+# and is not configurable here.
+#
+# Set in the including config:
+#   model.backbone        "swin-large-mapillary" (the paper's model) |
+#                         "swin-large" (Cityscapes)  -> HF checkpoint
+#   model.pretrained_path optional local checkpoint to initialize from
+#   model.from_checkpoint identity training only: the panoptic fine-tuning
+#                         checkpoint to start from
+#
+# Backbone learning rate is set in code: panoptic fine-tuning trains the
+# backbone at 0.1x the base learning rate; identity training freezes it.
+
+model:
+  name: mask2former_swinl
+  embedding_dim: 256   # per-query embedding width (transformer decoder hidden dim)

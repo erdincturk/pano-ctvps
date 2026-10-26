@@ -1,0 +1,17 @@
+{
+  "geometry_eta040": {
+    "tau": 0.4,
+    "rank_key": null
+  },
+  "ordering_eta_per_class_and_pair": {
+    "tau": {"F-FR|vehicle": 0.35, "FR-SR|vehicle": 0.35, "human": 0.25, "vehicle": 0.45},
+    "rank_key": "cos_med"
+  },
+  "appearance_veto": {
+    "tau": {"F-FR|vehicle": 0.35, "FR-SR|vehicle": 0.35, "human": 0.25, "vehicle": 0.45},
+    "rank_key": "cos_med",
+    "veto_key": "cos_med_adapted",
+    "veto_min": 0.5,
+    "veto_rescue": 0.6
+  }
+}

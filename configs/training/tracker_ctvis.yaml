@@ -1,0 +1,90 @@
+# Identity training of the tracker (CTVIS-style consistent contrastive training).
+#
+# Starts from the segmenter checkpoint with the backbone frozen. The pixel
+# decoder, the transformer decoder and the 256-d embedding head are trained.
+#
+#   * Embeddings: decoder queries after the final layer normalization.
+#   * Training-time memory bank: memory-embedding positives with
+#     probability 0.5, beta capped at 0.8.
+#   * Every frame of a T=5 clip serves as anchor frame; all 199 non-anchor
+#     queries of each reference frame are negatives.
+#   * Per-class anchor weights clip(sqrt(f_med / f(c)), 0.5, 4.0).
+#   * AdamW, cosine LR with 500-iteration linear warm-up, batch 8, 28K iterations.
+#   * Augmentation: 640x640 crop, scale [0.75, 1.25], no horizontal flip.
+#
+# The tracker settings at inference are set in the evaluation scripts.
+
+_base_:
+  - "../data/waymo.yaml"
+  - "../models/mask2former_swinl.yaml"
+
+experiment:
+  name: "tracker_ctvis"
+  output_dir: "outputs/tracker_ctvis"
+
+dataset:
+  cameras: [1, 2, 3, 4, 5]
+
+model:
+  backbone: "swin-large-mapillary"
+  embedding_dim: 256
+  from_checkpoint: "checkpoints/segmenter.pth"
+
+training:
+  max_iterations: 28000
+  amp: true
+  gradient_clip: 0.1
+  optimizer:
+    lr_decoder: 2.0e-5
+    lr_embed:   2.0e-4
+    weight_decay: 0.05
+    betas: [0.9, 0.999]
+  warmup:
+    iterations: 500
+  lr_scheduler:
+    type: "cosine"
+    eta_min: 1.0e-6
+
+contrastive:
+  reid_weight: 2.0
+  aux_reid_weight: 1.0
+  num_negatives: 199                      # all non-anchor queries of the reference frame
+  clip_length: 5
+  anchor_reweighting:
+    clamp_min: 0.5
+    clamp_max: 4.0
+
+train_memory_bank:
+  beta_min: 0.0
+  beta_max: 0.8
+  maximum_cache: 10
+  positive_momentum_prob: 0.5             # memory embedding as positive, else raw embedding
+
+augmentation:
+  crop_size: [640, 640]
+  min_scale: 0.75
+  max_scale: 1.25
+  color_jitter: true
+
+dataloader:
+  batch_size: 8
+  num_workers: 4
+
+# In-training evaluation at every checkpoint: PQ on the first num_samples
+# validation frames (crop resolution) and tracking wSTQ on the listed
+# validation sequences with the tracker settings below. best.pth is the
+# checkpoint with the highest of these wSTQ values.
+evaluation:
+  num_samples: 200
+  tracking_sequences: 3
+  sequence_indices: [3, 11, 17]
+  match_threshold: 0.6
+  init_score_threshold: 0.3
+  num_dead_frames: 10
+
+checkpoint:
+  save_interval: 4000
+  keep_last: 0                            # 0 = keep all checkpoints
+
+logging:
+  print_interval: 50

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.env
+venv/
+.venv/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Logs and runtime state
+*.log
+*.pid
+wandb/
+
+# Model checkpoints and derived caches (large, never committed)
+checkpoints/
+outputs/
+*.pth
+*.pt
+*.npz
+*.npy
+*.parquet
+
+# Waymo Open Dataset (never redistributed; expected at ../data, ignored here as well)
+/data/
+
+# Submissions (model predictions) and packaged archives
+submissions/
+*.binproto
+*.tar.gz
+*.zip
+*.mp4

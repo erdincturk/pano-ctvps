@@ -1,0 +1,51 @@
+[project]
+name = "panoctvps"
+version = "1.0.0"
+description = "Pano-CTVPS: Panoramic Video Panoptic Segmentation on the Waymo Open Dataset (segment, track, link across five cameras)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Erdinç Türk" },
+    { name = "Taner Danışman" },
+]
+keywords = ["video panoptic segmentation", "multi-camera", "autonomous driving", "Waymo Open Dataset", "tracking"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = [
+    "torch>=2.11",
+    "torchvision>=0.26",
+    "numpy>=2.0",
+    "scipy>=1.14",
+    "pyarrow>=17.0",
+    "pandas>=2.2",
+    "pillow>=10.0",
+    "opencv-python-headless>=4.10",
+    "transformers>=5.3",
+    "huggingface-hub>=1.8",
+    "safetensors>=0.4",
+    "pycocotools>=2.0",
+    "protobuf>=4.25",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Repository = "https://github.com/erdincturk/pano-ctvps"
+Benchmark = "https://waymo.com/open/challenges/2023/2d-video-panoptic-segmentation/"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["panoctvps*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --tb=short"

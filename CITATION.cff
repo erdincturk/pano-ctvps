@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article below (preferred) rather than the software entry."
+title: "Pano-CTVPS: Consistent Training for Panoramic Video Panoptic Segmentation"
+type: software
+version: 1.0.0
+date-released: 2026-10-09
+license: Apache-2.0
+repository-code: "https://github.com/erdincturk/pano-ctvps"
+authors:
+  - family-names: "Türk"
+    given-names: "Erdinç"
+    affiliation: "Akdeniz University"
+  - family-names: "Danışman"
+    given-names: "Taner"
+    affiliation: "Akdeniz University"
+preferred-citation:
+  type: article
+  title: "Pano-CTVPS: Consistent Training for Panoramic Video Panoptic Segmentation"
+  authors:
+    - family-names: "Türk"
+      given-names: "Erdinç"
+      affiliation: "Akdeniz University"
+    - family-names: "Danışman"
+      given-names: "Taner"
+      affiliation: "Akdeniz University"
+  journal: "IEEE Access"
+  year: 2026
+  # volume, pages and DOI are added on publication
+  notes: "Under review."

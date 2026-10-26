@@ -1,0 +1,53 @@
+_base_:
+  - "../data/waymo.yaml"
+  - "../models/mask2former_swinl.yaml"
+
+experiment:
+  name: "segmenter_mapillary"
+  output_dir: "outputs/segmenter_mapillary"
+
+dataset:
+  cameras: [1, 2, 3, 4, 5]
+
+model:
+  backbone: "swin-large-mapillary"
+
+training:
+  max_iterations: 90000
+  amp: true
+  gradient_clip: 0.01
+  optimizer:
+    lr: 1.0e-4
+    weight_decay: 0.05
+    betas: [0.9, 0.999]
+  warmup:
+    iterations: 1000
+  lr_scheduler:
+    type: "multistep"
+    milestones: [60000, 80000]
+    gamma: 0.1
+
+augmentation:
+  crop_size: [640, 640]
+  min_scale: 0.5
+  max_scale: 2.0
+  flip_prob: 0.5
+  color_jitter: true
+  copy_paste:
+    enabled: false
+    paste_prob: 0.5
+    max_paste: 3
+
+dataloader:
+  batch_size: 4
+  num_workers: 4
+
+evaluation:
+  interval: 10000
+
+checkpoint:
+  save_interval: 10000
+  keep_last: 3
+
+logging:
+  print_interval: 50

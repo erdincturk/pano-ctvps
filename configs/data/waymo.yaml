@@ -1,0 +1,15 @@
+# Waymo Open Dataset v2.0.1 (PVPS labels) — merged into training configs via `_base_`.
+#
+# Dataset facts are defined in code, not config:
+#
+#   class taxonomy (28 classes: 8 thing / 20 stuff, plus class id 0 =
+#   undefined; panoptic divisor, camera names and resolutions)
+#                            -> panoctvps/data/constants.py
+#   adjacent camera pairs    -> panoctvps/linker/overlap.py  (ADJACENT_PAIRS)
+#   scene/frame lists        -> configs/splits/{training,validation,test}_frames.txt
+#                               (696 / 20 / 40 scenes)
+
+dataset:
+  name: waymo_open_dataset_v2
+  root: "../data/waymo_open_dataset_v_2_0_1"
+  cameras: [1, 2, 3, 4, 5]   # FRONT, FRONT_LEFT, FRONT_RIGHT, SIDE_LEFT, SIDE_RIGHT

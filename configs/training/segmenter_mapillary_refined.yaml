@@ -1,0 +1,53 @@
+_base_:
+  - "../data/waymo.yaml"
+  - "../models/mask2former_swinl.yaml"
+
+experiment:
+  name: "segmenter_mapillary_refined"
+  output_dir: "outputs/segmenter_mapillary_refined"
+
+dataset:
+  cameras: [1, 2, 3, 4, 5]  # all 5 cameras
+
+model:
+  backbone: "swin-large-mapillary"
+
+training:
+  max_iterations: 80000  # warm start: --resume-from outputs/segmenter_mapillary_refined_front/best.pth
+  amp: true
+  gradient_clip: 0.1
+  optimizer:
+    lr: 1.0e-4
+    weight_decay: 0.05
+    betas: [0.9, 0.999]
+  warmup:
+    iterations: 2000
+  lr_scheduler:
+    type: "cosine"
+    eta_min: 1.0e-6
+
+augmentation:
+  crop_size: [640, 640]
+  min_scale: 0.75
+  max_scale: 1.25
+  flip_prob: 0.0
+  color_jitter: true
+  copy_paste:
+    enabled: true
+    paste_prob: 0.4
+    max_paste: 3
+
+dataloader:
+  batch_size: 8
+  num_workers: 4
+  persistent_workers: false  # respawn workers each epoch to bound dataloader memory
+
+evaluation:
+  interval: 10000
+
+checkpoint:
+  save_interval: 10000
+  keep_last: 0  # keep all checkpoints
+
+logging:
+  print_interval: 50
