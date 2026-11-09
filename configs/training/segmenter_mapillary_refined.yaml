@@ -46,7 +46,7 @@ evaluation:
   interval: 10000
 
 checkpoint:
-  save_interval: 10000
+  save_interval: 5000
   keep_last: 0  # keep all checkpoints
 
 logging:
