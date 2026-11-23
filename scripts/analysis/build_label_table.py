@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""label_statistics.py — per-class statistics of the ground-truth thing masks (training or validation split).
-Its per-mask table is the input of scripts/analysis/dataset_statistics.py (Table 2 of the paper; supplement, Tables S1, S3 and
+"""build_label_table.py — per-class statistics of the ground-truth thing masks (training or validation split).
+Its per-mask table is the input of scripts/analysis/analyze_dataset.py (Table 2 of the paper; supplement, Tables S1, S3 and
 S5) and of the ground-truth columns of scripts/analysis/analyze_age_gap.py (Tables S4 and S15).
 
 Scene list and frames from configs/splits/{split}_frames.txt. For every listed camera image,
@@ -16,7 +16,7 @@ Per thing class:
 Writes a per-mask table (npz) and the summary (json).
 
 Usage:
-  python scripts/analysis/label_statistics.py --split validation --output-dir outputs/analyses/labels
+  python scripts/analysis/build_label_table.py --split validation --output-dir outputs/analyses/labels
 """
 from __future__ import annotations
 

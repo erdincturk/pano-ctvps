@@ -5,7 +5,7 @@ Tables S21, S22, S24 and S27; the run reproduces the links of the full linker in
 incorrect, 296 missed).
 
 Reads the cache (tracks in records['tracker_id_deployed']), the scored candidates (scripts/pipeline/build_scores.py), the
-adapted cosines (scripts/pipeline/build_cosines.py), the deployed linker configuration (configs/linker_deployed.json) and the
+adapted cosines (scripts/pipeline/build_cosines.py), the deployed linker configuration (configs/linker/deployed.json) and the
 overlap tables (scripts/experiments/build_overlap_tables.py; ground-truth class of each object). Selects nothing.
 
 
@@ -210,7 +210,7 @@ def main():
     ap.add_argument("--scores-dir", type=Path, default=Path("outputs/linker/scored_candidates"))
     ap.add_argument("--cosines-dir", type=Path, default=Path("outputs/linker/adapted_cosines"))
     ap.add_argument("--tables-dir", type=Path, required=True, help="Overlap tables of the cache.")
-    ap.add_argument("--config", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--config", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--linker-tables", type=Path, default=None,
                     help="Output of scripts/experiments/eval_linker_tables.py (per-scene scores of the tracker and the full system).")
     ap.add_argument("--output", type=Path, required=True)

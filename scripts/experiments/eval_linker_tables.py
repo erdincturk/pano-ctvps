@@ -80,7 +80,7 @@ def main():
     ap.add_argument("--tables-dir", type=Path, required=True)
     ap.add_argument("--cache-dir", type=Path, default=Path("outputs/tracker_ctvis_val_cache"))
     ap.add_argument("--cosines-dir", type=Path, default=Path("outputs/linker/adapted_cosines"))
-    ap.add_argument("--config", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--config", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--scenes", default="", help="Comma-separated scene names (default: all scenes of the tables).")
     ap.add_argument("--tid-field", default="tracker_id_deployed")
     ap.add_argument("--output", type=Path, required=True)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""make_segmenter_cache_checkpoint.py — a checkpoint for caching the outputs of the segmenter before identity training.
+"""build_segmenter_checkpoint.py — a checkpoint for caching the outputs of the segmenter before identity training.
 
 scripts/pipeline/build_cache_gt.py loads the segmenter and an embedding head from one checkpoint. For the segmenter before
 identity training (rows 1 and 2 of Table 6; supplement, Tables S9 and S10), this script copies the
@@ -7,7 +7,7 @@ segmenter weights unchanged and adds an untrained embedding head (EmbeddingHead(
 never used by these rows: the IoU tracker uses the masks only and MinVIS uses the frame queries of the cache.
 
 Usage:
-  python scripts/experiments/make_segmenter_cache_checkpoint.py --segmenter checkpoints/segmenter.pth \
+  python scripts/experiments/build_segmenter_checkpoint.py --segmenter checkpoints/segmenter.pth \
       --output checkpoints/segmenter_for_cache.pth
   python scripts/pipeline/build_cache_gt.py --checkpoint checkpoints/segmenter_for_cache.pth --split validation \
       --cache-dir outputs/segmenter_val_cache

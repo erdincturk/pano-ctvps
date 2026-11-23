@@ -113,7 +113,7 @@ def main():
     ap.add_argument("--tables-dir", type=Path, required=True, help="Overlap tables of the cache.")
     ap.add_argument("--scores-dir", type=Path, default=Path("outputs/linker/scored_candidates"))
     ap.add_argument("--cosines-dir", type=Path, default=Path("outputs/linker/adapted_cosines"))
-    ap.add_argument("--config", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--config", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()

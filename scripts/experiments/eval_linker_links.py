@@ -12,7 +12,7 @@ identity also contains a track of another object.
 
 Usage:
   python scripts/experiments/eval_linker_links.py --scores-dir outputs/linker/scored_candidates \
-      --cosines-dir outputs/linker/adapted_cosines --configs configs/linker_table7.json \
+      --cosines-dir outputs/linker/adapted_cosines --configs configs/linker/table7.json \
       --output outputs/linker/table7_links.json
 """
 from __future__ import annotations
@@ -41,7 +41,7 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--scores-dir", type=Path, default=REPO / "outputs/linker/scored_candidates")
     ap.add_argument("--cosines-dir", type=Path, default=REPO / "outputs/linker/adapted_cosines")
-    ap.add_argument("--configs", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--configs", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--output", type=Path, default=REPO / "outputs/linker/linker_links.json")
     args = ap.parse_args()
 

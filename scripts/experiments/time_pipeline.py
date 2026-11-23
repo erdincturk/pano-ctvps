@@ -10,16 +10,16 @@ Subcommands
             in the evaluation), segmented (forward and panoptic post-processing), then the tracker and the causal
             linker process the frame. The tracker and the linker read the cached outputs of the deployed model, so
             their times are those of the deployed system. Times are reported with and without image loading.
-  linker    The causal linker (scripts/experiments/online_linker.py, k = 1) on the cached tracks of all validation scenes,
+  linker    The causal linker (panoctvps/linker/online.py, k = 1) on the cached tracks of all validation scenes,
             computed live frame by frame (the adapter of (15) is applied to the embeddings of the scene once, at
-            setup, as in online_linker): per timestamp, the band test of every tracked thing mask (proposal (13)),
+            setup, as in panoctvps.linker.online): per timestamp, the band test of every tracked thing mask (proposal (13)),
             the panoramic projection of the masks that a candidate pair needs (once per detection), the clipped
             overlap u of every candidate pair present in the frame (for a pair proposed in this frame, also over
             its earlier shared frames, as the running statistics of the causal linker include them), the raw and
             adapted cosines, then the decision step. Logged per frame and camera pair: the time of the geometry
             (band test, projection, comparison), the number of candidate pairs present, the tracks of each camera
             and those in the overlap band; per frame: the time of the decision step. Check: the identities equal
-            those of online_linker.simulate_scene (k = 1) and the overlaps equal its pair table (--check).
+            those of panoctvps.linker.online.simulate_scene (k = 1) and the overlaps equal its pair table (--check).
   tracker   The deployed tracker (θ_match 0.7, θ_init 0.01, N_dead 5, motion gate 600/800/800/1000/1000 px) on the
             cached outputs of all validation scenes, with the frame index, the number of detections and the number
             of active tracks logged per frame and camera (decoding of the cached masks not timed).
@@ -53,7 +53,6 @@ import torch  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, str(Path(__file__).resolve().parent))   # online_linker.py, in this folder
 
 from panoctvps.data.cache_io import decode_rle, reconstruct_frame  # noqa: E402
 from panoctvps.linker.adapter import EmbeddingAdapter  # noqa: E402
@@ -65,7 +64,7 @@ from panoctvps.linker.proposer import PARTNERS, SUPERCLASS, _in_overlap  # noqa:
 from panoctvps.linker.scorer import _ext4  # noqa: E402
 from panoctvps.tracker.motion_gate import MotionGateMemoryBankTracker  # noqa: E402
 
-import online_linker as ol  # noqa: E402
+from panoctvps.linker import online as ol  # noqa: E402
 
 torch.set_num_threads(1)
 GATE = {1: 600.0, 2: 800.0, 3: 800.0, 4: 1000.0, 5: 1000.0}
@@ -119,7 +118,7 @@ class LiveLinker:
                 self.ovf[(a, b)] = o; self.ovf[(b, a)] = o
         emb = np.asarray(npz["embeddings"], np.float32)
         self.emb = emb / np.maximum(np.linalg.norm(emb, axis=1, keepdims=True), 1e-8)
-        with torch.no_grad():                         # adapter of (15), on the raw embeddings, as online_linker
+        with torch.no_grad():                         # adapter of (15), on the raw embeddings, as panoctvps.linker.online
             ad = adapter(torch.from_numpy(np.asarray(npz["embeddings"], np.float32))).numpy()
         self.emb_ad = ad / np.maximum(np.linalg.norm(ad, axis=1, keepdims=True), 1e-8)
         self.setup_s = time.perf_counter() - t0
@@ -238,7 +237,7 @@ class LiveLinker:
             r["proj_cmp_s"] += time.perf_counter() - t0
             r["pairs_present"] += 1
             present.append(key)
-        # 3. decision step (as online_linker.simulate_scene, k = 1)
+        # 3. decision step (as panoctvps.linker.online.simulate_scene, k = 1)
         t0 = time.perf_counter()
         for cam, dets in cam_dets.items():
             for d in dets:
@@ -438,7 +437,7 @@ def main():
     ap.add_argument("--cache-dir", type=Path, default=REPO / "outputs/tracker_ctvis_val_cache")
     ap.add_argument("--adapter", type=Path, default=REPO / "outputs/linker/adapter.pt")
     ap.add_argument("--cosines-dir", type=Path, default=REPO / "outputs/linker/adapted_cosines")
-    ap.add_argument("--config", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--config", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--checkpoint", type=Path, default=REPO / "checkpoints/segmenter.pth")
     ap.add_argument("--dataset-root", default=str(REPO.parent / "data/waymo_open_dataset_v_2_0_1"))
     ap.add_argument("--scene", default="")

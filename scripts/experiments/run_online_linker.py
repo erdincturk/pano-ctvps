@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""run_online_linker.py — the causal linker on the validation split (Table S6).
+"""run_online_linker.py — the causal linker on the validation split (supplement, Table S25; Section VI-C).
 
 Stages (CPU only, from the cached validation predictions):
   build   per scene (parallel): pair table (geometry once) and frame tables
@@ -9,7 +9,7 @@ Stages (CPU only, from the cached validation predictions):
   sweep   the causal linker for k in {1, 2, 3, 5, 8}: wSTQ / wAQ / wSQ, link
           counts, timing -> <out-dir>/results.json and <out-dir>/REPORT.md.
 
-The causal rule is described in scripts/experiments/online_linker.py.
+The causal rule is described in panoctvps/linker/online.py.
 
 Usage (from the repository root):
   python scripts/experiments/run_online_linker.py --stage build --workers 8
@@ -29,10 +29,9 @@ from pathlib import Path
 
 import numpy as np
 
-HERE = Path(__file__).resolve().parent
-REPO = HERE.parent
-sys.path.insert(0, str(HERE))
-import online_linker as ol  # noqa: E402
+REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO))
+from panoctvps.linker import online as ol  # noqa: E402
 from panoctvps.linker.link_eval import link_counts  # noqa: E402
 
 KS = [1, 2, 3, 5, 8]
@@ -160,7 +159,7 @@ def write_report(res: dict, out_dir: Path) -> None:
     fl, dep, causal = res["tracker_only"], res["per_scene_linker"], res["causal"]
     L = ["# Causal linker on the validation split\n",
          f"{res['n_scenes']} validation scenes, from the cached predictions.\n",
-         "## Table S6\n",
+         "## Table S25\n",
          "| Configuration | k | wSTQ | wAQ | Correct | Wrong | Missed |",
          "|---|---:|---:|---:|---:|---:|---:|",
          f"| Tracker only | - | {fl['wSTQ']:.4f} | {fl['wAQ']:.4f} | 0 | 0 | {dep['links']['true']} |",

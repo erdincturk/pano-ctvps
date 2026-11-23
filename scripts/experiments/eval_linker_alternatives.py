@@ -25,7 +25,7 @@ Shared definitions
   pair = the mean of u over its shared frames in which the two clipped projections are not both empty.
 
 Runs
-1. deployed: configs/linker_deployed.json through this code path (check run).
+1. deployed: configs/linker/deployed.json through this code path (check run).
 2. appearance_only (threshold grid): no calibration at inference. Candidate: a pair of tracks in adjacent cameras
    whose detections have the same super-class in at least one shared frame (the proposal (13) without the band
    condition). Score: the adapted similarity. Accepted when the score is at or above the threshold and the exact
@@ -101,7 +101,7 @@ TABLES = Path("outputs/overlap_tables/tracker_ctvis_val")
 OUT = Path("outputs/linker/alternatives")
 TID = "tracker_id_deployed"
 UNMATCHED_OFFSET = 1 << 40
-CFG = json.loads((REPO / "configs/linker_deployed.json").read_text())["deployed"]
+CFG = json.loads((REPO / "configs/linker/deployed.json").read_text())["deployed"]
 
 
 def _set_paths(paths):
@@ -406,7 +406,7 @@ def main():
     ap.add_argument("--cosines-dir", type=Path, default=COSINES)
     ap.add_argument("--adapter", type=Path, default=ADAPTER, help="Adapter weights of scripts/pipeline/train_adapter.py.")
     ap.add_argument("--tables-dir", type=Path, default=TABLES)
-    ap.add_argument("--config", type=Path, default=REPO / "configs/linker_deployed.json")
+    ap.add_argument("--config", type=Path, default=REPO / "configs/linker/deployed.json")
     ap.add_argument("--out-dir", type=Path, default=OUT)
     ap.add_argument("--workers", type=int, default=10)
     ap.add_argument("--limit", type=int, default=0)

@@ -1,4 +1,5 @@
-"""Causal (online) form of the linker, evaluated on the cached validation predictions.
+"""Causal (online) form of the linker, evaluated on the cached validation predictions (supplement, Table S25;
+Section VI-C). Used by scripts/experiments/run_online_linker.py and scripts/experiments/time_pipeline.py.
 
 At frame t only frames <= t are used. A candidate pair (same proposal test as
 panoctvps/linker/proposer.py) becomes available at the first frame at which
@@ -42,16 +43,11 @@ from __future__ import annotations
 import bisect
 import collections
 import json
-import sys
 import time
 from pathlib import Path
 from typing import Dict, FrozenSet, List, Optional, Set, Tuple
 
 import numpy as np
-
-REPO = Path(__file__).resolve().parents[2]
-if str(REPO) not in sys.path:
-    sys.path.insert(0, str(REPO))
 
 from panoctvps.data.cache_io import decode_rle  # noqa: E402
 from panoctvps.data.constants import NUM_CLASSES, THING_CLASSES  # noqa: E402
@@ -67,14 +63,15 @@ from panoctvps.linker.scorer import _ext4, score_candidates  # noqa: E402
 
 OFFSET = 256 ** 3                     # STQuality default offset (class * OFFSET + inst)
 CAM_NS = 100_000                      # tracker-only id namespace: cam * CAM_NS + tid
-DEFAULT_CONFIG = REPO / "configs/linker_deployed.json"
+REPO = Path(__file__).resolve().parents[2]
+DEFAULT_CONFIG = REPO / "configs/linker/deployed.json"
 
 Tracklet = Tuple[int, int]
 Pair = FrozenSet[Tracklet]
 
 
 def load_config(path: Path = DEFAULT_CONFIG, key: str = "deployed") -> dict:
-    """One named linker configuration (format of configs/linker_deployed.json)."""
+    """One named linker configuration (format of configs/linker/deployed.json)."""
     return json.loads(Path(path).read_text())[key]
 
 

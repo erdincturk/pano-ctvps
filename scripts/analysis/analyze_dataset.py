@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""dataset_statistics.py — statistics of the released labels of WOD: PVPS (Table 2 of the paper; supplement,
+"""analyze_dataset.py — statistics of the released labels of WOD: PVPS (Table 2 of the paper; supplement,
 Tables S1, S2, S3, S5 and S6). No model output.
 
 Scenes and frames come from configs/splits/{training,validation,test}_frames.txt. Four parts:
@@ -8,7 +8,7 @@ labels      Table 2 (annotated images, tracked instances, multicamera instances,
             once), Table S1 (per thing class: tracked instances, share, masks, mask size, masks on an instance of
             another class), Table S3 (tracked instances per camera, cameras per tracked instance) and the instance
             columns of Table S5 (tracked instances in both cameras of each adjacent camera pair, with and without a
-            shared frame). Input: the per-mask tables of scripts/analysis/label_statistics.py (training and validation).
+            shared frame). Input: the per-mask tables of scripts/analysis/build_label_table.py (training and validation).
             A tracked instance is a (scene, global id) whose masks are marked as tracked. It is in a camera if it
             has a mask there, multicamera if it is in two or more cameras, and seen by two cameras at once if two
             cameras hold a mask of it in the same annotated frame (a shared frame). Annotated images = annotated
@@ -35,13 +35,13 @@ conditions  Table S6, and the conditions columns of Table S28: time of day, weat
             without a file in testing/ is read from testing_location/.
 
 Usage:
-  python scripts/analysis/label_statistics.py --split training --output-dir outputs/analyses/labels
-  python scripts/analysis/label_statistics.py --split validation --output-dir outputs/analyses/labels
-  python scripts/analysis/dataset_statistics.py labels --masks-dir outputs/analyses/labels \
+  python scripts/analysis/build_label_table.py --split training --output-dir outputs/analyses/labels
+  python scripts/analysis/build_label_table.py --split validation --output-dir outputs/analyses/labels
+  python scripts/analysis/analyze_dataset.py labels --masks-dir outputs/analyses/labels \
       --output outputs/analyses/dataset_labels.json
-  python scripts/analysis/dataset_statistics.py motion --output outputs/analyses/dataset_motion.json
-  python scripts/analysis/dataset_statistics.py band --output outputs/analyses/dataset_band.json
-  python scripts/analysis/dataset_statistics.py conditions --output outputs/analyses/dataset_conditions.json
+  python scripts/analysis/analyze_dataset.py motion --output outputs/analyses/dataset_motion.json
+  python scripts/analysis/analyze_dataset.py band --output outputs/analyses/dataset_band.json
+  python scripts/analysis/analyze_dataset.py conditions --output outputs/analyses/dataset_conditions.json
 """
 from __future__ import annotations
 
@@ -316,7 +316,7 @@ def main():
     ap.add_argument("part", choices=("labels", "motion", "band", "conditions"))
     ap.add_argument("--dataset-root", type=Path, default=REPO.parent / "data/waymo_open_dataset_v_2_0_1")
     ap.add_argument("--masks-dir", type=Path, default=Path("outputs/analyses/labels"),
-                    help="labels: folder of the per-mask tables of scripts/analysis/label_statistics.py.")
+                    help="labels: folder of the per-mask tables of scripts/analysis/build_label_table.py.")
     ap.add_argument("--csv", type=Path, default=None, help="band: also write the width of every camera and scene.")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--output", type=Path, required=True)

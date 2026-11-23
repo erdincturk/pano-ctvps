@@ -1,6 +1,7 @@
 # Pano-CTVPS — pinned environment of the release (tested on an NVIDIA DGX Spark, ARM64, GB10 GPU).
 # Python 3.12.3, CUDA 13.0. Pure PyTorch: no custom CUDA extensions, no Detectron2.
 # Install:  pip install -r requirements.txt && pip install -e .
+# The list pins the packages the code imports; their own dependencies are resolved by pip.
 #
 # The numbers of the paper were produced with the earlier environment listed at the end of this file
 # (torch 2.11.0, transformers 5.3.0). The release code gives the same results under both: the cached
@@ -10,9 +11,7 @@
 
 torch==2.13.0              # CUDA 13.0 build (torch 2.13.0+cu130)
 torchvision==0.28.0
-transformers==5.15.0
-huggingface-hub==1.27.0
-safetensors==0.8.0
+transformers==5.15.0       # brings huggingface-hub and safetensors
 numpy==2.5.2
 scipy==1.18.0
 pyarrow==25.0.1

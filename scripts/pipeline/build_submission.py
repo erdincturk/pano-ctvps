@@ -2,7 +2,7 @@
 
 For each scene of the prediction cache:
   1. run the linker (proposal -> scoring + adapted cosines -> assignment with
-     configs/linker_deployed.json) to get one global identity per
+     configs/linker/deployed.json) to get one global identity per
      (camera, track);
   2. per frame, reconstruct (pred_sem, pred_inst_local) and map each local
      detection -> its track -> global identity, building a per-pixel global
@@ -47,7 +47,7 @@ SPLIT_FILES = {
     "validation": REPO / "configs/splits/validation_frames.txt",
     "test": REPO / "configs/splits/test_frames.txt",
 }
-LINKER_CONFIG = REPO / "configs/linker_deployed.json"
+LINKER_CONFIG = REPO / "configs/linker/deployed.json"
 
 
 def requested_timestamps(split: str):

@@ -19,7 +19,7 @@ merges two tracks of the same camera.
 
 Usage:
   python scripts/pipeline/eval_linker_wstq.py --cache-dir outputs/tracker_ctvis_val_cache \
-      --cosines-dir outputs/linker/adapted_cosines --configs configs/linker_table7.json \
+      --cosines-dir outputs/linker/adapted_cosines --configs configs/linker/table7.json \
       --output outputs/linker/table7.json
 
 --configs is a JSON file of named configurations:
@@ -62,7 +62,7 @@ def main() -> None:
     ap.add_argument("--cosines-dir", type=Path,
                     default=REPO / "outputs/linker/adapted_cosines",
                     help="Adapted cosines (scripts/pipeline/build_cosines.py) for the appearance veto.")
-    ap.add_argument("--configs", type=Path, default=REPO / "configs/linker_deployed.json",
+    ap.add_argument("--configs", type=Path, default=REPO / "configs/linker/deployed.json",
                     help="JSON file of named linker configurations (see above).")
     ap.add_argument("--n-sequences", type=int, default=0,
                     help="Evaluate only the first N scenes (0 = all).")

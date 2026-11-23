@@ -5,7 +5,7 @@ differences of the two models (Section VI-B2: "higher in 13 of the 20 scenes").
 
 Inputs: cells of scripts/experiments/run_tracker_cells.py (<stem>.json and <stem>_ids.npz) for each model and setting, with the
 cache and the overlap tables of each model; for the ground-truth column of Table S15, the per-mask table of
-scripts/analysis/label_statistics.py (--gt-masks). Selects nothing.
+scripts/analysis/build_label_table.py (--gt-masks). Selects nothing.
 
 Definitions:
 - Frames: the 99 annotated timestamps of a scene, indexed 0..98 (the tracker's own frame counter).
@@ -132,7 +132,7 @@ def scene_decisions(job):
 
 def gt_reference(masks_path, cache_dir):
     """The instance-side definitions on the ground-truth masks of the tracked instances (per-mask table of
-    scripts/analysis/label_statistics.py); frame counter = unique_timestamps of the cache."""
+    scripts/analysis/build_label_table.py); frame counter = unique_timestamps of the cache."""
     t = np.load(masks_path, allow_pickle=True)
     m, scenes = t["masks"], [str(x) for x in t["scenes"]]
     tr = m[m["tracked"] & (m["gid"] > 0)]
@@ -166,7 +166,7 @@ def main() -> None:
     ap.add_argument("--model", action="append", required=True, help='"name:cache dir:overlap tables dir"')
     ap.add_argument("--cell", action="append", required=True, help='"model:setting:cell path without .json"')
     ap.add_argument("--gt-masks", type=Path, default=None,
-                    help="Per-mask table of scripts/analysis/label_statistics.py (validation) for the ground-truth columns.")
+                    help="Per-mask table of scripts/analysis/build_label_table.py (validation) for the ground-truth columns.")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--scenes", default="", help="Comma-separated scene names (default: all scenes of the cells).")
     ap.add_argument("--output", type=Path, required=True)

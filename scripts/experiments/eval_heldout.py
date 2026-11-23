@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""heldout_check.py — held-out check (leave one scene out) of the tuned rows of Table 6 (supplement, Table S13).
+"""eval_heldout.py — held-out check (leave one scene out) of the tuned rows of Table 6 (supplement, Table S13).
 
 Rule: in each of the 20 rounds, the setting with the highest pooled wAQ on the other 19 scenes is selected and scored
 on the held-out scene; the 20 held-out scores are pooled as the evaluator pools scenes (sum of the per-scene AQ
@@ -20,14 +20,22 @@ the other 19 scenes (each camera's bound is read from its own STQ; the SQ of a c
 is then scored exactly: the track ids of each camera come from the sweep cell with that camera's bound (the tracker
 handles each camera alone), scored with the overlap tables.
 
-Usage:
-  python scripts/experiments/heldout_check.py --counts-from outputs/tracker_cells/tracker_ctvis_val/ours_m0.70_i0.01_d5.json \
-      --row "CTVIS (retuned thresholds)|outputs/tracker_cells/tracker_ctvis_val/ours_m*.json|ours_m0.70_i0.01_d5" \
-      --row "MinVIS|outputs/tracker_cells/tracker_ctvis_val/minvis_m*.json|minvis_m0.90_i0.01_d5" \
-      --row "IoU tracker|outputs/tracker_cells/tracker_ctvis_val/iou_t*.json|iou_t0.30_d5" \
-      --full-tracker "CTVIS (retuned thresholds)" --tables-dir outputs/overlap_tables/tracker_ctvis_val \
-      --sweep "ours_m0.70_i0.01_d5=outputs/tracker_cells/tracker_ctvis_val/ours_m0.70_i0.01_d5_gate" \
-      --sweep "ours_m0.60_i0.01_d5=outputs/tracker_cells/tracker_ctvis_val/ours_m0.60_i0.01_d5_gate" \
+Usage (all tuned rows of Table 6, as in Table S13; the cells of scripts/experiments/run_tracker_cells.py with the
+configs of configs/tracker_cells/, gate sweeps in their own folder; the MinVIS pattern leaves out the 0.95 edge row):
+  python scripts/experiments/eval_heldout.py \
+      --counts-from outputs/tracker_cells/tracker_ctvis_val/ours_full_tracker_deployed.json \
+      --row "1|outputs/tracker_cells/segmenter_val/iou_t*.json|iou_t0.30_d5" \
+      --row "2|outputs/tracker_cells/segmenter_val/minvis_m0.[5-9]0_*.json|minvis_m0.90_i0.01_d5" \
+      --row "3|outputs/tracker_cells/tracker_ctvis_p0_val/iou_t*.json|iou_t0.30_d5" \
+      --row "4|outputs/tracker_cells/tracker_ctvis_p0_val/minvis_m0.[5-9]0_*.json|minvis_m0.90_i0.01_d5" \
+      --row "6|outputs/tracker_cells/tracker_ctvis_p0_val/ours_m*.json|ours_m0.70_i0.01_d5" \
+      --row "7|outputs/tracker_cells/tracker_ctvis_val/iou_t*.json|iou_t0.30_d5" \
+      --row "8|outputs/tracker_cells/tracker_ctvis_val/minvis_m0.[5-9]0_*.json|minvis_m0.90_i0.01_d5" \
+      --row "10|outputs/tracker_cells/tracker_ctvis_val/ours_m*.json|ours_m0.70_i0.01_d5" \
+      --full-tracker 10 \
+      --tables-dir outputs/overlap_tables/tracker_ctvis_val \
+      --sweep "ours_m0.70_i0.01_d5=outputs/tracker_cells/tracker_ctvis_val_gate/ours_m0.70_i0.01_d5_gate" \
+      --sweep "ours_m0.60_i0.01_d5=outputs/tracker_cells/tracker_ctvis_val_gate/ours_m0.60_i0.01_d5_gate" \
       --deployed outputs/tracker_cells/tracker_ctvis_val/ours_full_tracker_deployed.json \
       --output outputs/heldout/heldout.json
 """

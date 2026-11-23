@@ -1,6 +1,6 @@
 [project]
 name = "panoctvps"
-version = "1.0.0"
+version = "1.1.1"
 description = "Pano-CTVPS: Panoramic Video Panoptic Segmentation on the Waymo Open Dataset (segment, track, link across five cameras)"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -25,10 +25,8 @@ dependencies = [
     "pillow>=10.0",
     "opencv-python-headless>=4.10",
     "transformers>=5.3",
-    "huggingface-hub>=1.8",
-    "safetensors>=0.4",
     "pycocotools>=2.0",
-    "protobuf>=4.25",
+    "protobuf>=6.33.5",       # the generated submission module (panoctvps/submission/proto) checks this at import
     "pyyaml>=6.0",
 ]
 
@@ -48,4 +46,5 @@ include = ["panoctvps*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]          # the repository root, so tests can import scripts/ as well as the package
 addopts = "-q --tb=short"

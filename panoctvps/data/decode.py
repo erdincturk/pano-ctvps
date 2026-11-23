@@ -59,21 +59,3 @@ def decode_panoptic(
         instance_ids: (H, W) int32, instance IDs (0 = no instance).
     """
     return np.divmod(panoptic_label.astype(np.int32), divisor)
-
-
-def encode_panoptic(
-    semantic_ids: np.ndarray,
-    instance_ids: np.ndarray,
-    divisor: int = PANOPTIC_LABEL_DIVISOR,
-) -> np.ndarray:
-    """Encode semantic + instance into panoptic label.
-
-    Args:
-        semantic_ids: (H, W) array of class IDs.
-        instance_ids: (H, W) array of instance IDs.
-        divisor: panoptic label divisor.
-
-    Returns:
-        (H, W) uint32 panoptic label.
-    """
-    return semantic_ids.astype(np.uint32) * divisor + instance_ids.astype(np.uint32)
