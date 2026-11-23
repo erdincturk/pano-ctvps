@@ -9,7 +9,7 @@ the remaining frames (0 if none remain).
 ``cos_med`` is the median, over all shared frames of the pair, of the cosine
 between the normalised embeddings of the two detections. The same median of
 the adapted embeddings (``cos_med_adapted``) is computed by
-scripts/build_cosines.py with the same function on psi(e).
+scripts/pipeline/build_cosines.py with the same function on psi(e).
 """
 from __future__ import annotations
 

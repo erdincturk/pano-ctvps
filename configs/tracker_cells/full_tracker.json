@@ -1,0 +1,16 @@
+[
+ {
+  "name": "ours_full_tracker_deployed",
+  "tracker": "memorybank",
+  "match_threshold": 0.7,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5,
+  "gate_px_per_cam": {
+   "1": 600,
+   "2": 800,
+   "3": 800,
+   "4": 1000,
+   "5": 1000
+  }
+ }
+]

@@ -2,8 +2,8 @@
 
 The association of MinVIS (Huang et al., NeurIPS 2022), applied to the thing
 detections of each frame. MinVIS matches the segmenter's own query embeddings;
-in this repository ``scripts/run_baseline_cell.py`` supplies those embeddings
-to the tracker. The association is
+in this repository ``panoctvps/evaluation/tracker_cells.py`` supplies the
+decoder query states stored in the cache (field ``frame_queries``). The association is
 
     cur, tgt = L2norm(cur_embds), L2norm(tgt_embds)
     cost = 1 - cur @ tgt.T                       # cosine distance

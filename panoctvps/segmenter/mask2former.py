@@ -82,7 +82,7 @@ def freeze_backbone(model: nn.Module) -> int:
 
 
 def load_checkpoint(model: nn.Module, ckpt_path: str, device: str = "cpu") -> int:
-    """Load a training checkpoint saved by scripts/train_segmenter.py.
+    """Load a training checkpoint saved by scripts/pipeline/train_segmenter.py.
 
     Returns the iteration number saved in the checkpoint.
     """

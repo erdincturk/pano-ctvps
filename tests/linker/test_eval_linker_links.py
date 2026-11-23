@@ -1,4 +1,4 @@
-"""Test for scripts/eval_linker_links.py on a hand-built scene table."""
+"""Test for scripts/experiments/eval_linker_links.py on a hand-built scene table."""
 from __future__ import annotations
 
 import json
@@ -37,7 +37,7 @@ def test_counts_per_config(tmp_path):
                     "veto_min": 0.5, "veto_rescue": 0.6}}
     (tmp_path / "cfg.json").write_text(json.dumps(cfg))
     out = tmp_path / "out.json"
-    subprocess.run([sys.executable, str(REPO / "scripts/eval_linker_links.py"),
+    subprocess.run([sys.executable, str(REPO / "scripts/experiments/eval_linker_links.py"),
                     "--scores-dir", str(scores), "--cosines-dir", str(cos),
                     "--configs", str(tmp_path / "cfg.json"), "--output", str(out)],
                    check=True, capture_output=True)

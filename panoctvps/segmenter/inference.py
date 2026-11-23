@@ -1,8 +1,8 @@
 """Panoptic inference with learned identity embeddings.
 
 Prediction path of the segmenter plus embedding head, used by
-`scripts/build_cache.py`, `scripts/build_cache_gt.py` and the in-training
-evaluation of `scripts/train_tracker.py`.
+`scripts/pipeline/build_cache.py`, `scripts/pipeline/build_cache_gt.py` and the in-training
+evaluation of `scripts/pipeline/train_tracker.py`.
 """
 
 from typing import Dict, List

@@ -1,0 +1,149 @@
+[
+ {
+  "name": "ours_published_m0.30_i0.01_d20",
+  "tracker": "memorybank",
+  "match_threshold": 0.3,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 20
+ },
+ {
+  "name": "ours_m0.50_i0.01_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.5,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.50_i0.01_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.5,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.50_i0.05_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.5,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.50_i0.05_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.5,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.60_i0.01_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.6,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.60_i0.01_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.6,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.60_i0.05_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.6,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.60_i0.05_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.6,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.70_i0.01_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.7,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.70_i0.01_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.7,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.70_i0.05_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.7,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.70_i0.05_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.7,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.80_i0.01_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.8,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.80_i0.01_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.8,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.80_i0.05_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.8,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.80_i0.05_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.8,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.90_i0.01_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.9,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.90_i0.01_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.9,
+  "init_score_threshold": 0.01,
+  "num_dead_frames": 10
+ },
+ {
+  "name": "ours_m0.90_i0.05_d5",
+  "tracker": "memorybank",
+  "match_threshold": 0.9,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 5
+ },
+ {
+  "name": "ours_m0.90_i0.05_d10",
+  "tracker": "memorybank",
+  "match_threshold": 0.9,
+  "init_score_threshold": 0.05,
+  "num_dead_frames": 10
+ }
+]

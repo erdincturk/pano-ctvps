@@ -1,4 +1,4 @@
-"""Integration tests for the tracker training pipeline (scripts/train_tracker.py).
+"""Integration tests for the tracker training pipeline (scripts/pipeline/train_tracker.py).
 
 Uses a small model (swin-tiny) and synthetic data. Covers:
 
@@ -172,7 +172,7 @@ class TestModelSetup:
     def test_separate_param_groups(self, model_and_head):
         """Optimizer should have separate LR groups for decoder and embed_head."""
         model, embed_head = model_and_head
-        from scripts.train_tracker import build_optimizer
+        from scripts.pipeline.train_tracker import build_optimizer
         cfg = {
             "training": {"optimizer": {
                 "lr_decoder": 1e-5, "lr_embed": 1e-4,
@@ -251,7 +251,7 @@ class TestForwardPass:
         reid_embeds = embed_head(query_embeds)
 
         # Hungarian matching
-        from scripts.train_tracker import hungarian_indices
+        from scripts.pipeline.train_tracker import hungarian_indices
         indices = hungarian_indices(model, outputs, mask_labels, class_labels, device)
         assert len(indices) == 3  # B*T = 1*3
 
@@ -287,7 +287,7 @@ class TestHungarianIndices:
             class_labels=class_labels,
         )
 
-        from scripts.train_tracker import hungarian_indices
+        from scripts.pipeline.train_tracker import hungarian_indices
         indices = hungarian_indices(model, outputs, mask_labels, class_labels, device)
 
         assert len(indices) == 2  # B*T frames
@@ -326,7 +326,7 @@ class TestBackwardPass:
 
         reid_embeds = embed_head(outputs.transformer_decoder_last_hidden_state)
 
-        from scripts.train_tracker import hungarian_indices
+        from scripts.pipeline.train_tracker import hungarian_indices
         indices = hungarian_indices(model, outputs, mask_labels, class_labels, device)
         cl_items = _cl_items(reid_embeds, indices, batch, clip_length=2)
         cl_losses = contrastive_loss(cl_items, reid_embeds, WOD_THING_ANCHOR_WEIGHTS)
@@ -358,7 +358,7 @@ class TestCheckpointing:
     def test_save_load_roundtrip(self, model_and_head, device, output_dir):
         """Checkpoint saves and loads all state correctly."""
         model, embed_head = model_and_head
-        from scripts.train_tracker import build_optimizer, _build_state
+        from scripts.pipeline.train_tracker import build_optimizer, _build_state
         from panoctvps.training.engine import save_checkpoint, load_latest_checkpoint
 
         cfg = {"training": {"optimizer": {
@@ -414,7 +414,7 @@ class TestPQEvaluation:
     def test_evaluate_pq_runs(self, model_and_head, device, dataset_root):
         """evaluate_pq returns valid metrics on a small sample."""
         model, _ = model_and_head
-        from scripts.train_tracker import evaluate_pq
+        from scripts.pipeline.train_tracker import evaluate_pq
         cfg = {
             "dataset": {"cameras": [1]},
             "augmentation": {"crop_size": [256, 256]},
@@ -445,7 +445,7 @@ class TestTrackingEvaluation:
     def test_evaluate_tracking_runs(self, model_and_head, device, dataset_root):
         """evaluate_tracking returns valid wSTQ metrics for 1 sequence."""
         model, embed_head = model_and_head
-        from scripts.train_tracker import evaluate_tracking
+        from scripts.pipeline.train_tracker import evaluate_tracking
         cfg = {"dataset": {"cameras": [1]}}
         results = evaluate_tracking(
             model, embed_head, dataset_root, cfg, device, n_sequences=1,
@@ -509,7 +509,7 @@ class TestFullTrainingLoop:
         model.train()
         embed_head.train()
 
-        from scripts.train_tracker import build_optimizer, hungarian_indices, _build_state
+        from scripts.pipeline.train_tracker import build_optimizer, hungarian_indices, _build_state
         from panoctvps.training.engine import save_checkpoint
 
         cfg = {"training": {"optimizer": {

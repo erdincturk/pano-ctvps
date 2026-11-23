@@ -15,7 +15,7 @@ identity of its detections). For one assignment of global identities:
            whose global identity also contains a track of another object
 
 Scored-candidate table (np.savez_compressed, one file per scene, written by
-scripts/build_scores.py):
+scripts/pipeline/build_scores.py):
   candidates : one row per scored pair, in the scorer's order -
                camA/tidA/camB/tidB, iou_mean, n_frames/n_scored,
                class_match/classA/classB, cos_med (NaN = None),
@@ -165,7 +165,7 @@ def load_scene_table(path: Path) -> dict:
 
 
 def merge_adapted_cosines(scenes: List[dict], cos_dir: Path) -> None:
-    """Join the adapted cosines (scripts/build_cosines.py) into the scenes'
+    """Join the adapted cosines (scripts/pipeline/build_cosines.py) into the scenes'
     scored dicts in place, as ``cos_med_adapted`` (missing / NaN -> None)."""
     for s in scenes:
         idx = load_adapted_cosines(cos_dir / f"{s['segment']}.npz")

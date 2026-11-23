@@ -11,8 +11,8 @@ zero, so that psi is the identity on normalised embeddings before training.
 It operates on cached embeddings only; the segmenter and tracker are unchanged.
 
 It is trained with a symmetric InfoNCE loss on pairs of detections from
-adjacent cameras of the training split (scripts/build_pairs.py,
-scripts/train_adapter.py).
+adjacent cameras of the training split (scripts/pipeline/build_pairs.py,
+scripts/pipeline/train_adapter.py).
 """
 from __future__ import annotations
 

@@ -24,7 +24,7 @@ def linker_assignment(npz, cams, configs,
     configs: list of (name, cfg) with cfg = {"tau": float|dict, "rank_key":
     str|None, and optionally "veto_key", "veto_min", "veto_rescue"}, passed to
     assign_global_ids. cosines_path: the scene's adapted-cosine file
-    (scripts/build_cosines.py), needed by the appearance veto.
+    (scripts/pipeline/build_cosines.py), needed by the appearance veto.
     """
     ovbp = overlap_by_partner(cams)
     cands = propose_candidates(npz, ovbp, tid_field=tid_field)
